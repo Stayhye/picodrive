@@ -201,8 +201,8 @@ extern struct DrZ80 drZ80;
 
 #define Z80_STATE_SIZE 0x60
 
-#define z80_resetCycles() \
-  Pico.t.z80c_cnt -= Pico.t.z80c_aim, Pico.t.z80c_aim = Pico.t.z80_scanline = 0
+#define z80_resetCycles(aim) \
+  Pico.t.z80c_cnt -= (aim < Pico.t.z80c_cnt ? aim : Pico.t.z80c_cnt), Pico.t.z80c_aim = Pico.t.z80_scanline = 0
 
 #define z80_cyclesDone() \
   (Pico.t.z80c_aim - z80_cyclesLeft)
@@ -523,6 +523,7 @@ struct mcd_pcm
 #define PCD_ST_S68K_SLEEP   4
 #define PCD_ST_S68K_POLL   16
 #define PCD_ST_M68K_POLL   32
+#define PCD_ST_CDD_CMD     64
 #define PCD_ST_S68K_IFL2   0x100
 
 struct mcd_misc
